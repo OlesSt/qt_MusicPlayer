@@ -18,10 +18,27 @@ public:
     explicit MusicPlayer(QWidget *parent = nullptr);
     ~MusicPlayer();
 
+    void stateChanged(QMediaPlayer::PlaybackState state);
+    void positionChanged(qint64 position);
+
+
+public slots:
+    void buttonPlay();
+    void buttonPause();
+    void buttonStop();
+
+    void buttonMute();
+    void sliderPlayMove(float position);
+    void sliderVolumeMove(float position);
+
+    void fileOpen();
+    void fileExit();
+
 private:
     Ui::MusicPlayer *ui;
     QMediaPlayer *mediaPlayer;
     QAudioOutput *audioOutput;
+    bool isMute;
 
 };
 

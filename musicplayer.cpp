@@ -7,6 +7,7 @@ MusicPlayer::MusicPlayer(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->horizontalVolumeSlider->setValue(80);
+    isMute = false;
 
     mediaPlayer = new QMediaPlayer(this);
     audioOutput = new QAudioOutput(this);
@@ -42,35 +43,27 @@ void MusicPlayer::positionChanged(qint64 position)
 
 }
 
-void MusicPlayer::buttonPlay()
-{
-
-}
-
-void MusicPlayer::buttonPause()
-{
-
-}
-
-void MusicPlayer::buttonStop()
-{
-
-}
-
+void MusicPlayer::buttonPlay()  {mediaPlayer->play();}
+void MusicPlayer::buttonPause() {mediaPlayer->pause();}
+void MusicPlayer::buttonStop()  {mediaPlayer->stop();}
 void MusicPlayer::buttonMute()
 {
-
+    if (isMute)
+    {
+        audioOutput->setMuted(true);
+        ui->pushMute->setText("Muted");
+        isMute = false;
+    }
+    else
+    {
+        audioOutput->setMuted(false);
+        ui->pushMute->setText("Mute");
+        isMute = true;
+    }
 }
 
-void MusicPlayer::sliderPlayMove()
-{
-
-}
-
-void MusicPlayer::sliderVolumeMove()
-{
-
-}
+void MusicPlayer::sliderPlayMove(float position)   {mediaPlayer->setPosition(position);}
+void MusicPlayer::sliderVolumeMove(float position) {audioOutput->setVolume(position);}
 
 void MusicPlayer::fileOpen()
 {
