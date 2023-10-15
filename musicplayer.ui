@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="labelName">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -27,7 +27,7 @@
      <string>Uknown track</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -63,7 +63,14 @@
        <item>
         <widget class="QPushButton" name="pushStop">
          <property name="text">
-          <string>Pause</string>
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelTimer">
+         <property name="text">
+          <string>Timer</string>
          </property>
         </widget>
        </item>

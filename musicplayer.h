@@ -21,15 +21,14 @@ public:
     void stateChanged(QMediaPlayer::PlaybackState state);
     void positionChanged(qint64 position);
 
-
-public slots:
+private slots:
     void buttonPlay();
     void buttonPause();
     void buttonStop();
 
     void buttonMute();
-    void sliderPlayMove(float position);
-    void sliderVolumeMove(float position);
+    void sliderPlayMove(int position);
+    void sliderVolumeMove(int position);
 
     void fileOpen();
     void fileExit();
@@ -39,6 +38,7 @@ private:
     QMediaPlayer *mediaPlayer;
     QAudioOutput *audioOutput;
     bool isMute;
+    QString filename;
 
 };
 
