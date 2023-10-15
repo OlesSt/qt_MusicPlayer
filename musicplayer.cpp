@@ -11,6 +11,8 @@ MusicPlayer::MusicPlayer(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->horizontalVolumeSlider->setMinimum(0);
+    ui->horizontalVolumeSlider->setMaximum(100);
     ui->horizontalVolumeSlider->setValue(80);
     isMute = false;
 
@@ -26,12 +28,11 @@ MusicPlayer::MusicPlayer(QWidget *parent) :
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(fileOpen()));
     connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(fileExit()));
     connect(ui->horizontalVolumeSlider, SIGNAL(sliderMoved(int)), this, SLOT(sliderVolumeMove(int)));
+    connect(ui->horizontalVolumeSlider, &QSlider::valueChanged, this, &MusicPlayer::sliderVolumeMove);
     connect(ui->horizontalPlaySlider, SIGNAL(sliderMoved(int)), this, SLOT(sliderPlayMove(int)));
 
     connect(mediaPlayer, &QMediaPlayer::playbackStateChanged, this, &MusicPlayer::stateChanged);
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MusicPlayer::positionChanged);
-
-
 }
 
 MusicPlayer::~MusicPlayer()
@@ -65,14 +66,15 @@ void MusicPlayer::stateChanged(QMediaPlayer::PlaybackState state)
 
 void MusicPlayer::positionChanged(qint64 position)
 {
-    if (ui->horizontalPlaySlider->maximum() != mediaPlayer->duration())
+    auto duration = mediaPlayer->duration();
+    if (ui->horizontalPlaySlider->maximum() != duration)
         ui->horizontalPlaySlider->setMaximum(mediaPlayer->duration());
 
     ui->horizontalPlaySlider->setValue(position);
 
     int seconds = position/1000 % 60;
     int minut = seconds/60 % 60;
-    int hours = minut/60 & 24;
+    int hours = minut/60 % 24;
 
     QTime time (hours, minut, seconds);
     ui->labelTimer->setText(time.toString());
